@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DI NIRO - Gaming Site</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #061e49;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 50px;
+      background-color: rgba(6, 30, 73, 0.9);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo img {
+      width: 150px; /* زيادة حجم الشعار */
+      height: 150px; /* زيادة حجم الشعار */
+      border-radius: 50%;
+      margin-right: 15px;
+      object-fit: contain; /* تغيير من cover إلى contain لضمان ظهور الشعار كاملاً */
+       /* خلفية بيضاء للشعار */
+      padding: 5px; /* تباعد داخلي */
+    }
+
+    .logo h2 {
+      font-size: 24px; /* زيادة حجم النص */
+      margin: 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      padding: 10px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      font-size: 16px; /* زيادة حجم خط القوائم */
+    }
+
+    nav ul li a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    nav ul li a.active {
+      background-color: white;
+      color: #061e49 !important;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .sign-in {
+      background-color: #f95d5d;
+      color: white;
+      padding: 12px 25px; /* زيادة حجم الزر */
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      font-size: 16px; /* زيادة حجم الخط */
+    }
+
+    .sign-in:hover {
+      background-color: #ff6b6b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 80px;
+      min-height: calc(100vh - 140px);
+    }
+
+    .left {
+      max-width: 50%;
+      animation: fadeInLeft 1s ease;
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .left h2 {
+      font-size: 18px; /* زيادة حجم الخط */
+      color: #ccc;
+      margin-bottom: 15px; /* زيادة المسافة */
+    }
+
+    .left h1 {
+      font-size: 52px; /* زيادة حجم العنوان الرئيسي */
+      font-weight: bold;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .underline {
+      text-decoration: underline;
+      text-decoration-color: #f95d5d;
+      text-decoration-thickness: 3px;
+      text-underline-offset: 8px;
+    }
+
+    .left p {
+      margin-top: 25px; /* زيادة المسافة */
+      font-size: 18px; /* زيادة حجم الخط */
+      color: #ddd;
+      line-height: 1.6;
+    }
+
+    .search-box {
+      margin-top: 35px; /* زيادة المسافة */
+      display: flex;
+      overflow: hidden;
+      border-radius: 30px;
+      max-width: 450px; /* زيادة العرض */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-box input {
+      padding: 16px; /* زيادة الحشوة */
+      border: none;
+      flex: 1;
+      outline: none;
+      font-size: 16px;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .search-box button {
+      background-color: #f95d5d;
+      border: none;
+      padding: 16px 30px; /* زيادة الحشوة */
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px; /* زيادة حجم الخط */
+    }
+
+    .search-box button:hover {
+      background-color: #ff6b6b;
+    }
+
+    .right {
+      position: relative;
+      animation: fadeInRight 1s ease;
+      margin-left: 50px; /* زيادة المسافة بين الصورة والنص */
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .right img {
+      width: 350px; /* زيادة حجم الصورة */
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+      object-fit: cover; /* للحفاظ على نسبة العرض إلى الارتفاع */
+    }
+
+    .right img:hover {
+      transform: scale(1.03);
+    }
+
+    .price-tag {
+      position: absolute;
+      top: 15px; /* تعديل الموضع */
+      right: 15px; /* تعديل الموضع */
+      background-color: #00aaff;
+      padding: 10px 18px; /* زيادة الحشوة */
+      border-radius: 20px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      font-size: 16px; /* زيادة حجم الخط */
+    }
+
+    .discount {
+      position: absolute;
+      bottom: -15px; /* تعديل الموضع */
+      left: -15px; /* تعديل الموضع */
+      background-color: #f95d5d;
+      padding: 18px; /* زيادة الحشوة */
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 20px; /* زيادة حجم الخط */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      nav ul {
+        gap: 15px;
+      }
+      
+      .container {
+        flex-direction: column;
+        padding: 40px 20px;
+      }
+      
+      .left {
+        max-width: 100%;
+        margin-bottom: 30px;
+      }
+      
+      .right {
+        margin-left: 0;
+      }
+      
+      .right img {
+        width: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+      <img src="logo.png" alt="DI NIRO Logo">
+      <h2>DI NIRO</h2>
+    </div>
+    <ul>
+      <li><a href="Home.html" class="active">Home</a></li>
+      <li><a href="our-shop.html">Our Shop</a></li>
+      <li><a href="free-games.html">Free Steam Games</a></li>
+      <li><a href="contact-us.html">Contact Us</a></li>
+    </ul>
+    
+    <a href="#" class="sign-in">SIGN IN</a>
+  </nav>
+
+  <div class="container">
+    <div class="left">
+      <h2>WELCOME TO DI NIRO</h2>
+      <h1>THE <span class="underline">BEST GAMING SITE</span></h1>
+      <p>Welcome to DI NIRO, your ultimate destination for gaming! Play your favorite games for free or grab them at unbeatable prices!! 3 to 4 times cheaper than anywhere else. Get the best deals and start gaming today!</p>
+      
+      <div class="search-box">
+        <input type="text" placeholder="Search games...">
+        <button>SEARCH NOW</button>
+      </div>
+    </div>
+
+    <div class="right">
+      <img src="Black.png" alt="Featured Game">
+      <div class="price-tag">$15</div>
+      <div class="discount">-75%</div>
+    </div>
+  </div>
+
+</body>
+</html>

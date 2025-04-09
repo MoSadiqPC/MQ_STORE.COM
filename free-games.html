@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DI NIRO - Free Steam Games</title>
+  <style>
+    :root {
+      --primary-color: #061e49;
+      --secondary-color: #f95d5d;
+      --accent-color: #00aaff;
+      --light-bg: #f4f4f4;
+      --dark-text: #333;
+      --light-text: #fff;
+      --gray-text: #666;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+    }
+
+    nav {
+      background-color: var(--primary-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 50px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo img {
+      width: 150px; /* زيادة حجم الشعار */
+      height: 150px; /* زيادة حجم الشعار */
+      border-radius: 50%;
+      margin-right: 15px;
+      object-fit: contain; /* تغيير من cover إلى contain لضمان ظهور الشعار كاملاً */
+       /* خلفية بيضاء للشعار */
+      padding: 5px; /* تباعد داخلي */
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: var(--light-text);
+      font-weight: bold;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+
+    nav ul li a.active {
+      background-color: var(--light-text);
+      color: var(--primary-color) !important;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .sign-in {
+      background-color: var(--secondary-color);
+      color: var(--light-text);
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .sign-in:hover {
+      background-color: #ff6b6b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color), #0d2b5e);
+      color: var(--light-text);
+      text-align: center;
+      padding: 60px 20px;
+      margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .page-header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 15px auto 0;
+    }
+
+    .category-filters {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .category-filters button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background-color: #e0e0e0;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .category-filters button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .category-filters .active {
+      background-color: var(--secondary-color);
+      color: var(--light-text);
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 0 50px 50px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .game-card {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+    }
+
+    .game-info {
+      padding: 20px;
+    }
+
+    .game-info h3 {
+      margin: 0 0 10px;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+
+    .game-info p {
+      font-size: 0.9rem;
+      color: var(--gray-text);
+      margin: 0 0 10px;
+      line-height: 1.5;
+    }
+
+    .game-info .genre-tag {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #e0f0ff;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      color: var(--primary-color);
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .free-label {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: var(--accent-color);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .GET-NOW {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 0 0 10px 10px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .GET-NOW:hover {
+      background-color: #ff6b6b;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      nav ul {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .games-grid {
+        padding: 0 20px 30px;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      }
+      
+      .page-header {
+        padding: 40px 15px;
+      }
+      
+      .page-header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">
+      <img src="logo.png" alt="DI NIRO Logo">
+      <h2>DI NIRO</h2>
+    </div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="our-shop.html">Our Shop</a></li>
+      <li><a href="free-games.html" class="active">Free Steam Games</a></li>
+      <li><a href="contact-us.html">Contact Us</a></li>
+    </ul>
+    <a href="#" class="sign-in">SIGN IN</a>
+  </nav>
+
+  <div class="page-header">
+    <h1>Free Steam Games</h1>
+    <p>Discover the best free-to-play games on Steam. No hidden costs, just pure gaming fun!</p>
+  </div>
+
+  <div class="category-filters">
+    <button class="active">SHOW ALL</button>
+    <button>ACTION</button>
+    <button>ADVENTURE</button>
+    <button>STRATEGY</button>
+    <button>RACING</button>
+    <button>RPG</button>
+  </div>
+
+  <div class="games-grid">
+    <div class="game-card">
+      <span class="free-label">FREE</span>
+      <img src="r.jpg" alt="Resident Evil 4">
+      <div class="game-info">
+        <h3>Resident Evil 4</h3>
+        <p>Survival horror game with intense action and gripping story.</p>
+        <span class="genre-tag">Horror</span>
+        <span class="genre-tag">Action</span>
+      </div>
+      <a href="GIT NOW.html" class="GET-NOW">GET NOW</a>
+    </div>
+    
+    <div class="game-card">
+      <span class="free-label">FREE</span>
+      <img src="a.jpg" alt="Assassin's Creed">
+      <div class="game-info">
+        <h3>Assassin's Creed</h3>
+        <p>Explore historical settings in this action-adventure stealth game.</p>
+        <span class="genre-tag">Adventure</span>
+        <span class="genre-tag">Stealth</span>
+      </div>
+      <a href="#" class="GET-NOW">GET NOW</a>
+    </div>
+    
+    <div class="game-card">
+      <span class="free-label">FREE</span>
+      <img src="d.jpg" alt="Dota 2">
+      <div class="game-info">
+        <h3>Dota 2</h3>
+        <p>The most-played game on Steam with endless strategic depth.</p>
+        <span class="genre-tag">MOBA</span>
+        <span class="genre-tag">Strategy</span>
+      </div>
+      <a href="#" class="GET-NOW">GET NOW</a>
+    </div>
+    
+    <div class="game-card">
+      <span class="free-label">FREE</span>
+      <img src="W.jpg" alt="Warframe">
+      <div class="game-info">
+        <h3>Warframe</h3>
+        <p>Fast-paced action shooter with cooperative gameplay.</p>
+        <span class="genre-tag">Shooter</span>
+        <span class="genre-tag">Co-op</span>
+      </div>
+      <a href="#" class="GET-NOW">GET NOW</a>
+    </div>
+    
+    <div class="game-card">
+      <span class="free-label">FREE</span>
+      <img src="P.jpg" alt="Path of Exile">
+      <div class="game-info">
+        <h3>Path of Exile</h3>
+        <p>Dark fantasy action RPG with deep character customization.</p>
+        <span class="genre-tag">RPG</span>
+        <span class="genre-tag">Dark Fantasy</span>
+      </div>
+      <a href="#" class="GET-NOW">GET NOW</a>
+    </div>
+    
+    <div class="game-card">
+      <span class="free-label">FREE</span>
+      <img src="H.jpg" alt="Team Fortress 2">
+      <div class="game-info">
+        <h3>Team Fortress 2</h3>
+        <p>Classic team-based shooter with unique character classes.</p>
+        <span class="genre-tag">FPS</span>
+        <span class="genre-tag">Multiplayer</span>
+      </div>
+      <a href="#" class="GET-NOW">GET NOW</a>
+    </div>
+  </div>
+</body>
+</html>
