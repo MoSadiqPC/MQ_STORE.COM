@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - DI NIRO</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #061e49;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #f95d5d;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .login-btn:hover {
+            background-color: #ff6b6b;
+        }
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h1>تسجيل الدخول</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">اسم المستخدم:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">كلمة المرور:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login-btn">تسجيل الدخول</button>
+            <div id="errorMessage" class="error-message"></div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // إخفاء رسالة الخطأ إذا كانت ظاهرة
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // إرسال البيانات إلى API
+            fetch('https://your-api-url.com/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // تخزين token في localStorage
+                    localStorage.setItem('authToken', data.token);
+                    
+                    // توجيه المستخدم إلى الصفحة الرئيسية
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // عرض رسالة الخطأ
+                    const errorElement = document.getElementById('errorMessage');
+                    errorElement.textContent = data.message || 'بيانات الدخول غير صحيحة';
+                    errorElement.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const errorElement = document.getElementById('errorMessage');
+                errorElement.textContent = 'حدث خطأ أثناء الاتصال بالخادم';
+                errorElement.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

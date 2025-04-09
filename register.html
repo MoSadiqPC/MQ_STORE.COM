@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DI NIRO - Register</title>
+    <style>
+        :root {
+            --primary-color: #061e49;
+            --secondary-color: #f95d5d;
+            --text-color: #ffffff;
+            --input-bg: rgba(255, 255, 255, 0.9);
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(6, 30, 73, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            width: 120px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 28px;
+            color: var(--text-color);
+        }
+
+        .register-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: var(--text-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background-color: var(--input-bg);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(249, 93, 93, 0.3);
+        }
+
+        .password-strength {
+            height: 5px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .strength-meter {
+            height: 100%;
+            width: 0%;
+            background-color: red;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .register-btn:hover {
+            background-color: #ff6b6b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #ddd;
+        }
+
+        .login-link a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .success-message {
+            color: #4CAF50;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .terms {
+            font-size: 14px;
+            color: #ccc;
+            margin-top: 20px;
+        }
+
+        .terms input {
+            margin-right: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .register-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="logo">
+            <img src="https://via.placeholder.com/120x120/061e49/ffffff?text=DI+NIRO" alt="DI NIRO Logo">
+            <h1>DI NIRO</h1>
+        </div>
+        
+        <div class="register-form">
+            <h2>Create Your Account</h2>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <div class="password-strength">
+                        <div class="strength-meter" id="passwordStrength"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                
+                <div class="terms">
+                    <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                    <label for="agreeTerms">I agree to the <a href="#" style="color: var(--secondary-color);">Terms of Service</a> and <a href="#" style="color: var(--secondary-color);">Privacy Policy</a></label>
+                </div>
+                
+                <button type="submit" class="register-btn">CREATE ACCOUNT</button>
+                <div id="errorMessage" class="error-message"></div>
+                <div id="successMessage" class="success-message"></div>
+            </form>
+            
+            <div class="login-link">
+                Already have an account? <a href="sign-in.html">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthMeter = document.getElementById('passwordStrength');
+            let strength = 0;
+            
+            if (password.length > 0) strength += 1;
+            if (password.length >= 8) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            const width = (strength / 5) * 100;
+            strengthMeter.style.width = width + '%';
+            
+            if (strength <= 2) {
+                strengthMeter.style.backgroundColor = 'red';
+            } else if (strength <= 4) {
+                strengthMeter.style.backgroundColor = 'orange';
+            } else {
+                strengthMeter.style.backgroundColor = '#4CAF50';
+            }
+        });
+
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            
+            const errorElement = document.getElementById('errorMessage');
+            const successElement = document.getElementById('successMessage');
+            
+            // Hide messages
+            errorElement.style.display = 'none';
+            successElement.style.display = 'none';
+            
+            // Validation
+            if (!username || !email || !password || !confirmPassword) {
+                errorElement.textContent = 'Please fill in all fields';
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                errorElement.textContent = 'Passwords do not match';
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            if (password.length < 8) {
+                errorElement.textContent = 'Password must be at least 8 characters';
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            if (!agreeTerms) {
+                errorElement.textContent = 'You must agree to the terms and conditions';
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            // Here you would typically send data to your server
+            // For demo purposes, we'll simulate a successful registration
+            setTimeout(() => {
+                // Simulate API call
+                const isSuccess = Math.random() > 0.2; // 80% chance of success for demo
+                
+                if (isSuccess) {
+                    successElement.textContent = 'Registration successful! Redirecting...';
+                    successElement.style.display = 'block';
+                    
+                    // Store user data (in a real app, you'd get this from your API)
+                    const userData = {
+                        username: username,
+                        email: email,
+                        token: 'demo-token-' + Math.random().toString(36).substr(2, 9)
+                    };
+                    
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    
+                    // Redirect to dashboard after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                } else {
+                    errorElement.textContent = 'Registration failed. Username or email may already exist.';
+                    errorElement.style.display = 'block';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

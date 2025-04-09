@@ -141,6 +141,8 @@
     .category-filters .active {
       background-color: var(--secondary-color);
       color: var(--light-text);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .games-grid {
@@ -157,8 +159,17 @@
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-      position: relative;
+      transition: all 0.5s ease;
+    }
+
+    .game-card.hidden {
+      opacity: 0;
+      transform: scale(0.9);
+      height: 0;
+      margin: 0;
+      padding: 0;
+      border: none;
+      overflow: hidden;
     }
 
     .game-card:hover {
@@ -280,7 +291,7 @@
       <li><a href="free-games.html">Free Steam Games</a></li>
       <li><a href="contact-us.html">Contact Us</a></li>
     </ul>
-    <a href="#" class="sign-in">SIGN IN</a>
+    <a href="sign-in.html" class="sign-in">SIGN IN</a>
   </nav>
 
   <div class="page-header">
@@ -289,19 +300,20 @@
   </div>
 
   <div class="category-filters">
-    <button class="active">SHOW ALL</button>
-    <button>ACTION</button>
-    <button>ADVENTURE</button>
-    <button>STRATEGY</button>
-    <button>RACING</button>
-    <button>RPG</button>
+    <button class="active" data-category="all">SHOW ALL</button>
+    <button data-category="action">ACTION</button>
+    <button data-category="adventure">ADVENTURE</button>
+    <button data-category="strategy">STRATEGY</button>
+    <button data-category="racing">RACING</button>
+    <button data-category="rpg">RPG</button>
   </div>
 
-  <div class="games-grid">
-    <div class="game-card">
+  <div class="games-grid" id="gamesGrid">
+    <!-- لعبة إكشن -->
+    <div class="game-card" data-categories="action">
       <div class="price-tag">$19.99</div>
       <div class="discount">-60%</div>
-      <img src="games/elden-ring.jpg" alt="Elden Ring">
+      <img src="E.jpg" alt="Elden Ring">
       <div class="game-info">
         <h3>Elden Ring</h3>
         <p>An epic action RPG from the creators of Dark Souls.</p>
@@ -313,13 +325,14 @@
       <a href="#" class="buy-btn">BUY NOW</a>
     </div>
     
-    <div class="game-card">
+    <!-- لعبة مغامرات -->
+    <div class="game-card" data-categories="adventure">
       <div class="price-tag">$15.99</div>
       <div class="discount">-55%</div>
-      <img src="games/cyberpunk.jpg" alt="Cyberpunk 2077">
+      <img src="C.jpg" alt="Cyberpunk 2077">
       <div class="game-info">
         <h3>Cyberpunk 2077</h3>
-        <p>Open-world RPG set in Night City, a megalopolis obsessed with power and glamour.</p>
+        <p>Open-world RPG set in Night City.</p>
         <div>
           <span class="original-price">$39.99</span>
           <span class="price-tag" style="background-color: var(--secondary-color); display: inline-block;">$15.99</span>
@@ -328,13 +341,14 @@
       <a href="#" class="buy-btn">BUY NOW</a>
     </div>
     
-    <div class="game-card">
+    <!-- لعبة إستراتيجية -->
+    <div class="game-card" data-categories="strategy">
       <div class="price-tag">$12.99</div>
       <div class="discount">-65%</div>
-      <img src="games/hogwarts.jpg" alt="Hogwarts Legacy">
+      <img src="S.jpg" alt="Civilization VI">
       <div class="game-info">
-        <h3>Hogwarts Legacy</h3>
-        <p>Experience the wizarding world in this open-world action RPG.</p>
+        <h3>Civilization VI</h3>
+        <p>Build an empire to stand the test of time.</p>
         <div>
           <span class="original-price">$39.99</span>
           <span class="price-tag" style="background-color: var(--secondary-color); display: inline-block;">$12.99</span>
@@ -343,46 +357,49 @@
       <a href="#" class="buy-btn">BUY NOW</a>
     </div>
     
-    <div class="game-card">
-      <div class="price-tag">$17.99</div>
-      <div class="discount">-50%</div>
-      <img src="games/god-of-war.jpg" alt="God of War">
-      <div class="game-info">
-        <h3>God of War</h3>
-        <p>Kratos returns in this critically acclaimed action-adventure game.</p>
-        <div>
-          <span class="original-price">$39.99</span>
-          <span class="price-tag" style="background-color: var(--secondary-color); display: inline-block;">$17.99</span>
-        </div>
-      </div>
-      <a href="#" class="buy-btn">BUY NOW</a>
-    </div>
-    
-    <div class="game-card">
+    <!-- لعبة سباقات -->
+    <div class="game-card" data-categories="racing">
       <div class="price-tag">$14.99</div>
-      <div class="discount">-70%</div>
-      <img src="games/dying-light.jpg" alt="Dying Light 2">
+      <div class="discount">-50%</div>
+      <img src="F.jpg" alt="Forza Horizon 5">
       <div class="game-info">
-        <h3>Dying Light 2</h3>
-        <p>Post-apocalyptic open-world game with parkour mechanics.</p>
+        <h3>Forza Horizon 5</h3>
+        <p>Your ultimate automotive adventure.</p>
         <div>
-          <span class="original-price">$49.99</span>
+          <span class="original-price">$29.99</span>
           <span class="price-tag" style="background-color: var(--secondary-color); display: inline-block;">$14.99</span>
         </div>
       </div>
       <a href="#" class="buy-btn">BUY NOW</a>
     </div>
     
-    <div class="game-card">
+    <!-- لعبة RPG -->
+    <div class="game-card" data-categories="rpg">
       <div class="price-tag">$16.99</div>
       <div class="discount">-60%</div>
-      <img src="games/horizon.jpg" alt="Horizon Forbidden West">
+      <img src="t.png" alt="The Witcher 3">
       <div class="game-info">
-        <h3>Horizon Forbidden West</h3>
-        <p>Explore distant lands in this stunning action RPG.</p>
+        <h3>The Witcher 3</h3>
+        <p>Open-world RPG in a fantasy universe.</p>
         <div>
-          <span class="original-price">$49.99</span>
+          <span class="original-price">$39.99</span>
           <span class="price-tag" style="background-color: var(--secondary-color); display: inline-block;">$16.99</span>
+        </div>
+      </div>
+      <a href="#" class="buy-btn">BUY NOW</a>
+    </div>
+    
+    <!-- لعبة إكشن أخرى -->
+    <div class="game-card" data-categories="action">
+      <div class="price-tag">$18.99</div>
+      <div class="discount">-40%</div>
+      <img src="DD.jpg" alt="DOOM Eternal">
+      <div class="game-info">
+        <h3>DOOM Eternal</h3>
+        <p>Fast-paced first-person shooter.</p>
+        <div>
+          <span class="original-price">$29.99</span>
+          <span class="price-tag" style="background-color: var(--secondary-color); display: inline-block;">$18.99</span>
         </div>
       </div>
       <a href="#" class="buy-btn">BUY NOW</a>
@@ -390,7 +407,36 @@
   </div>
 
   <script>
-    // يمكنك إضافة جافاسكريبت لمعالجة عملية الشراء
+    // فلترة الألعاب حسب الفئة
+    document.querySelectorAll('.category-filters button').forEach(button => {
+      button.addEventListener('click', function() {
+        // إزالة التنشيط من جميع الأزرار
+        document.querySelectorAll('.category-filters button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // تنشيط الزر الحالي
+        this.classList.add('active');
+        
+        const category = this.dataset.category;
+        const games = document.querySelectorAll('.game-card');
+        
+        games.forEach(game => {
+          if (category === 'all') {
+            game.classList.remove('hidden');
+          } else {
+            const categories = game.dataset.categories.split(' ');
+            if (categories.includes(category)) {
+              game.classList.remove('hidden');
+            } else {
+              game.classList.add('hidden');
+            }
+          }
+        });
+      });
+    });
+
+    // معالجة عملية الشراء
     document.querySelectorAll('.buy-btn').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
