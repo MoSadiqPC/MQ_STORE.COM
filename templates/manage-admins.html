@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="{{ session.get('language', 'en') }}">
+<head>
+    <meta charset="UTF-8"><title>{{ get_text('manage_admins') }} - DI NIRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"><h2>{{ get_text('dashboard') }}</h2></div>
+        <div class="nav-right">
+            <a href="{{ url_for('dashboard') }}" class="nav-link">Back to Dashboard</a>
+            <div class="theme-switch" id="theme-toggle">☀️</div>
+            <a href="{{ url_for('logout') }}" class="sign-in">{{ get_text('logout') }}</a>
+        </div>
+    </nav>
+    <div class="container dashboard">
+        <h1>{{ get_text('manage_admins') }}</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}{% endwith %}
+
+        <div class="admin-grid">
+            <div class="content-section">
+                <h2>Change Your Password</h2>
+                <form action="{{ url_for('manage_admins') }}" method="POST">
+                    <input type="hidden" name="action" value="change_password">
+                    <div class="form-group"><label>New Password</label><input type="password" name="new_password" required></div>
+                    <button type="submit" class="submit-btn">Update Password</button>
+                </form>
+            </div>
+            <div class="content-section">
+                <h2>Add New Admin</h2>
+                <form action="{{ url_for('manage_admins') }}" method="POST">
+                    <input type="hidden" name="action" value="add_admin">
+                    <div class="form-group"><label>Username</label><input type="text" name="username" required></div>
+                    <div class="form-group"><label>Password</label><input type="password" name="password" required></div>
+                    <button type="submit" class="submit-btn accent-secondary-btn">Add Admin</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Current Admins</h2>
+            <table><tbody>
+                {% for admin in admins %}
+                <tr><td>{{ admin.username }} {% if admin.id == session.admin_id %}(You){% endif %}</td>
+                    <td>
+                        {% if admin.id != session.admin_id %}
+                        <form action="{{ url_for('manage_admins') }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="action" value="delete_admin">
+                            <input type="hidden" name="admin_id" value="{{ admin.id }}">
+                            <button type="submit" class="action-btn delete-btn">Delete</button>
+                        </form>
+                        {% endif %}
+                    </td></tr>
+                {% endfor %}
+            </tbody></table>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

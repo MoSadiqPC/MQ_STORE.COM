@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>DI NIRO - The Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include 'nav.html' %}
+    <div class="page-header">
+        <h1>PREMIUM GAMES <span>SHOP</span></h1><p>Get exclusive deals on the hottest games!</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}" style="max-width: 600px; margin: 20px auto;">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="games-grid">
+        {% for game in games %}
+        <div class="game-card">
+            <img src="{{ url_for('static', filename=game.image_filename) }}" alt="{{ game.name }}">
+            <div class="game-info">
+                <h3>{{ game.name }}</h3>
+                <p>{{ game.description }}</p>
+                <div class="price-container">
+                    <span class="current-price">${{ "%.2f"|format(game.price) }}</span>
+                </div>
+                <a href="{{ url_for('order_form', game_id=game.id) }}" class="buy-btn">BUY NOW</a>
+            </div>
+        </div>
+        {% else %}
+        <p class="empty-message">The shop is currently empty.</p>
+        {% endfor %}
+    </div>
+    {% include 'footer.html' %}
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

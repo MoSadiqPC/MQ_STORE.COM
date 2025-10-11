@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>DI NIRO - Sign In</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"><h2>DI NIRO</h2></div>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('shop') }}">Shop</a></li>
+            <li><a href="{{ url_for('free_games') }}">Free Games</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+        </ul>
+        <div class="nav-right"><a href="{{ url_for('signin') }}" class="sign-in">SIGN IN</a></div>
+    </nav>
+    <div class="main-content">
+        <div class="form-container">
+            <h1>WELCOME <span>BACK</span></h1>
+            <form>
+                <div class="form-group"><label>Username</label><input type="text" required></div>
+                <div class="form-group"><label>Password</label><input type="password" required></div>
+                <button type="submit" class="submit-btn">SIGN IN</button>
+            </form>
+        </div>
+    </div>
+    <footer><p>&copy; 2025 DI NIRO. All Rights Reserved.</p></footer>
+</body>
+</html>

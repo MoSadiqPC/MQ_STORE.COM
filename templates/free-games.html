@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>DI NIRO - Free-to-Play Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include 'nav.html' %}
+    <div class="page-header">
+        <h1>FREE-TO-PLAY <span>GAMES</span></h1><p>Jump into the action with these amazing free games!</p>
+    </div>
+    <div class="games-grid">
+        {% for game in games %}
+        <div class="game-card">
+            <span class="free-label">FREE</span>
+            <img src="{{ url_for('static', filename=game.image_filename) }}" alt="{{ game.name }}">
+            <div class="game-info">
+                <h3>{{ game.name }}</h3>
+                <p>{{ game.description }}</p>
+                <a href="{{ url_for('reveal_credentials', game_id=game.id) }}" class="get-now-btn">GET NOW</a>
+            </div>
+        </div>
+        {% else %}
+        <p class="empty-message">No free games available right now. Please add some from the admin dashboard!</p>
+        {% endfor %}
+    </div>
+    {% include 'footer.html' %}
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Edit Game - DI NIRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% include 'nav.html' %}
+    <div class="container dashboard">
+        <h1>Edit <span>{{ game.name }}</span></h1>
+        <div class="content-section">
+            <form action="{{ url_for('update_game', game_id=game.id) }}" method="POST" class="add-form" enctype="multipart/form-data">
+                <div class="form-group"><label>Game Name</label><input type="text" name="name" value="{{ game.name }}" required></div>
+                <div class="form-group"><label>Price ($)</label><input type="text" name="price" value="{{ game.price }}" required></div>
+                <div class="form-group"><label>Description</label><input type="text" name="description" value="{{ game.description }}" required></div>
+                <div class="form-group"><label>Category</label><input type="text" name="category" value="{{ game.category }}" required></div>
+                <div class="form-group"><label>Change Image (Optional)</label><p>Current: {{ game.image_filename }}</p><input type="file" name="image"></div>
+                <div class="form-group"><label>Game Username</label><input type="text" name="game_username" value="{{ game.game_username }}"></div>
+                <div class="form-group"><label>Game Password</label><input type="text" name="game_password" value="{{ game.game_password }}"></div>
+                <div class="form-group checkbox"><label for="is_free">Is this a free game?</label><input type="checkbox" id="is_free" name="is_free" {% if game.is_free %}checked{% endif %}></div>
+                <button type="submit" class="submit-btn accent-secondary-btn">UPDATE GAME</button>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

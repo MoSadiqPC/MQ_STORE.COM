@@ -1,0 +1,20 @@
+<nav>
+    <div class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"><h2>DI NIRO</h2></div>
+    <ul>
+        <li><a href="{{ url_for('index') }}" class="{{ 'active' if endpoint == 'index' else '' }}">{{ get_text('home') }}</a></li>
+        <li><a href="{{ url_for('shop') }}" class="{{ 'active' if endpoint == 'shop' else '' }}">{{ get_text('shop') }}</a></li>
+        <li><a href="{{ url_for('free_games') }}" class="{{ 'active' if endpoint == 'free_games' else '' }}">{{ get_text('free_games') }}</a></li>
+        <li><a href="{{ url_for('contact') }}" class="{{ 'active' if endpoint == 'contact' else '' }}">{{ get_text('contact_us') }}</a></li>
+    </ul>
+    <div class="nav-right">
+        <div class="settings-bar">
+            <a href="{{ url_for('set_currency', currency='USD') }}" class="{{ 'active' if currency == 'USD' else '' }}">$</a>
+            <a href="{{ url_for('set_currency', currency='IQD') }}" class="{{ 'active' if currency == 'IQD' else '' }}">د.ع</a>
+            <a href="{{ url_for('set_language', lang='ar' if session.get('language', 'en') == 'en' else 'en') }}" class="lang-link">
+                {% if session.get('language', 'en') == 'en' %}ع{% else %}En{% endif %}
+            </a>
+        </div>
+        <div class="theme-switch" id="theme-toggle">☀️</div>
+        <a href="{{ url_for('signin') }}" class="sign-in">{{ get_text('sign_in') }}</a>
+    </div>
+</nav>
