@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ session.get('language', 'en') }}" class="{% if session.get('language', 'en') == 'ar' %}lang-ar{% endif %}">
+<head>
+    <meta charset="UTF-8"><title>Admin Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="main-content">
+        <div class="form-container">
+            <div class="logo" style="justify-content: center; margin-bottom: 1rem;"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"><h2>DI NIRO</h2></div>
+            <h1>Admin <span>Login</span></h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}{% endwith %}
+            <form action="{{ url_for('admin_login') }}" method="POST">
+                <div class="form-group"><label>Username</label><input type="text" name="username" required></div>
+                <div class="form-group"><label>Password</label><input type="password" name="password" required></div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

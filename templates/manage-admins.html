@@ -1,61 +1,71 @@
-<!DOCTYPE html>
-<html lang="{{ session.get('language', 'en') }}">
-<head>
-    <meta charset="UTF-8"><title>{{ get_text('manage_admins') }} - DI NIRO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <nav>
-        <div class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"><h2>{{ get_text('dashboard') }}</h2></div>
-        <div class="nav-right">
-            <a href="{{ url_for('dashboard') }}" class="nav-link">Back to Dashboard</a>
-            <div class="theme-switch" id="theme-toggle">☀️</div>
-            <a href="{{ url_for('logout') }}" class="sign-in">{{ get_text('logout') }}</a>
-        </div>
-    </nav>
-    <div class="container dashboard">
+{% extends 'layout.html' %}
+{% block title %}{{ get_text('manage_admins') }} - DI NIRO{% endblock %}
+
+{% block content %}
+<div class="container dashboard">
+    <div class="dashboard-header" style="margin-bottom: 2rem;">
         <h1>{{ get_text('manage_admins') }}</h1>
-        {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}{% endwith %}
+    </div>
 
-        <div class="admin-grid">
-            <div class="content-section">
-                <h2>Change Your Password</h2>
-                <form action="{{ url_for('manage_admins') }}" method="POST">
-                    <input type="hidden" name="action" value="change_password">
-                    <div class="form-group"><label>New Password</label><input type="password" name="new_password" required></div>
-                    <button type="submit" class="submit-btn">Update Password</button>
-                </form>
-            </div>
-            <div class="content-section">
-                <h2>Add New Admin</h2>
-                <form action="{{ url_for('manage_admins') }}" method="POST">
-                    <input type="hidden" name="action" value="add_admin">
-                    <div class="form-group"><label>Username</label><input type="text" name="username" required></div>
-                    <div class="form-group"><label>Password</label><input type="password" name="password" required></div>
-                    <button type="submit" class="submit-btn accent-secondary-btn">Add Admin</button>
-                </form>
-            </div>
-        </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-        <div class="content-section">
-            <h2>Current Admins</h2>
-            <table><tbody>
+    <div class="content-section">
+        <h2>{{ get_text('change_your_password') }}</h2>
+        <form action="{{ url_for('manage_admins') }}" method="POST">
+            <input type="hidden" name="action" value="change_password">
+            <div class="form-group">
+                <label>{{ get_text('new_password') }}</label>
+                <input type="password" name="new_password" required>
+            </div>
+            <button type="submit" class="submit-btn">{{ get_text('update_password') }}</button>
+        </form>
+    </div>
+
+    <div class="content-section">
+        <h2>{{ get_text('add_new_admin') }}</h2>
+        <form action="{{ url_for('manage_admins') }}" method="POST">
+            <input type="hidden" name="action" value="add_admin">
+            <div class="form-group">
+                <label>{{ get_text('username') }}</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form-group">
+                <label>{{ get_text('password') }}</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit" class="submit-btn">{{ get_text('add_admin_btn') }}</button>
+        </form>
+    </div>
+
+    <div class="content-section">
+        <h2>{{ get_text('current_admins') }}</h2>
+        <table style="width:100%">
+            <tbody>
                 {% for admin in admins %}
-                <tr><td>{{ admin.username }} {% if admin.id == session.admin_id %}(You){% endif %}</td>
+                <tr>
                     <td>
+                        {{ admin.username }} 
+                        {% if admin.id == session.admin_id %}({{ get_text('you') }}){% endif %}
+                    </td>
+                    <td style="text-align: right;">
                         {% if admin.id != session.admin_id %}
                         <form action="{{ url_for('manage_admins') }}" method="POST" style="display:inline;">
                             <input type="hidden" name="action" value="delete_admin">
                             <input type="hidden" name="admin_id" value="{{ admin.id }}">
-                            <button type="submit" class="action-btn delete-btn">Delete</button>
+                            <button type="submit" class="action-btn delete-btn">{{ get_text('delete') }}</button>
                         </form>
                         {% endif %}
-                    </td></tr>
+                    </td>
+                </tr>
                 {% endfor %}
-            </tbody></table>
-        </div>
+            </tbody>
+        </table>
     </div>
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
-</body>
-</html>
+</div>
+{% endblock %}

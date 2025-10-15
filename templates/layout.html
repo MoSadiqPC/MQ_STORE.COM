@@ -1,17 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ session.get('language', 'en') }}" class="{% if session.get('language', 'en') == 'ar' %}lang-ar{% endif %}">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}DI NIRO{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="{{ 'light-mode' if session.get('theme') == 'light' else '' }}">
+    
     {% include 'nav.html' %}
+
     <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container" style="padding-top: 1rem; padding-bottom: 0;">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         {% block content %}{% endblock %}
     </main>
-    <footer><p>&copy; 2025 DI NIRO. All Rights Reserved.</p></footer>
+    
+    {% include 'footer.html' %}
+
     <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

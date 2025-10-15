@@ -1,55 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"><title>Checkout - DI NIRO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    {% include 'nav.html' %}
-    <div class="main-content">
-        <div class="form-container checkout">
-            <h1>Checkout</h1>
-            <div class="checkout-summary">
-                <img src="{{ url_for('static', filename=game.image_filename) }}" alt="{{ game.name }}">
-                <div class="summary-details">
-                    <h2>{{ game.name }}</h2>
-                    <p>Price: 
-                        <span class="price">
-                            {% if currency == 'IQD' %}
-                                {{ "%.0f"|format(game.price * IQD_RATE) }} د.ع
-                            {% else %}
-                                ${{ "%.2f"|format(game.price) }}
-                            {% endif %}
-                        </span>
-                    </p>
+{% extends 'layout.html' %}
+{% block title %}{{ get_text('checkout') }} - DI NIRO{% endblock %}
+{% block content %}
+<div class="main-content">
+    <div class="form-container checkout">
+        <h1>{{ get_text('checkout') }}</h1>
+        <div class="checkout-summary">
+            <img src="{{ url_for('static', filename=game.image_filename) }}" alt="{{ game.name }}">
+            <div class="summary-details">
+                <h2>{{ game.name }}</h2>
+                <p>{{ get_text('price') }}: 
+                    <span class="price">
+                        {% if currency == 'IQD' %}
+                            {{ "%.0f"|format(game.price * IQD_RATE) }} د.ع
+                        {% else %}
+                            ${{ "%.2f"|format(game.price) }}
+                        {% endif %}
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <form action="{{ url_for('reveal_credentials', game_id=game.id) }}" method="GET">
+            <div class="form-group">
+                <label>{{ get_text('card_number') }}</label>
+                <input type="text" placeholder="xxxx-xxxx-xxxx-xxxx" required>
+            </div>
+            <div class="form-group">
+                <label>{{ get_text('cardholder_name') }}</label>
+                <input type="text" placeholder="{{ get_text('placeholder_cardholder_name') }}" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>{{ get_text('expiry_date') }}</label>
+                    <input type="text" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                    <label>{{ get_text('cvv') }}</label>
+                    <input type="text" placeholder="xxx" required>
                 </div>
             </div>
-
-            <form action="{{ url_for('reveal_credentials', game_id=game.id) }}" method="GET">
-                <div class="form-group">
-                    <label>Card Number</label>
-                    <input type="text" placeholder="xxxx-xxxx-xxxx-xxxx" required>
-                </div>
-                <div class="form-group">
-                    <label>Cardholder Name</label>
-                    <input type="text" placeholder="Your Name" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Expiry Date</label>
-                        <input type="text" placeholder="MM/YY" required>
-                    </div>
-                    <div class="form-group">
-                        <label>CVV</label>
-                        <input type="text" placeholder="xxx" required>
-                    </div>
-                </div>
-                <button type="submit" class="submit-btn accent-secondary-btn">CONFIRM PURCHASE</button>
-            </form>
-        </div>
+            <button type="submit" class="submit-btn accent-secondary-btn">{{ get_text('confirm_purchase') }}</button>
+        </form>
     </div>
-    {% include 'footer.html' %}
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
-</body>
-</html>
+</div>
+{% endblock %}

@@ -1,5 +1,8 @@
 <nav>
-    <div class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"><h2>DI NIRO</h2></div>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        <h2>DI NIRO</h2>
+    </div>
     <ul>
         <li><a href="{{ url_for('index') }}" class="{{ 'active' if endpoint == 'index' else '' }}">{{ get_text('home') }}</a></li>
         <li><a href="{{ url_for('shop') }}" class="{{ 'active' if endpoint == 'shop' else '' }}">{{ get_text('shop') }}</a></li>
@@ -10,11 +13,23 @@
         <div class="settings-bar">
             <a href="{{ url_for('set_currency', currency='USD') }}" class="{{ 'active' if currency == 'USD' else '' }}">$</a>
             <a href="{{ url_for('set_currency', currency='IQD') }}" class="{{ 'active' if currency == 'IQD' else '' }}">د.ع</a>
-            <a href="{{ url_for('set_language', lang='ar' if session.get('language', 'en') == 'en' else 'en') }}" class="lang-link">
-                {% if session.get('language', 'en') == 'en' %}ع{% else %}En{% endif %}
-            </a>
         </div>
+        <a href="{{ url_for('set_language', lang='ar' if session.get('language', 'en') == 'en' else 'en') }}" class="lang-link">
+            {% if session.get('language', 'en') == 'en' %}ع{% else %}En{% endif %}
+        </a>
         <div class="theme-switch" id="theme-toggle">☀️</div>
-        <a href="{{ url_for('signin') }}" class="sign-in">{{ get_text('sign_in') }}</a>
+        
+        {% if session.get('admin_id') %}
+            <a href="{{ url_for('view_messages') }}" class="notification-bell">
+                <span>🔔</span>
+                {% if unread_count > 0 %}
+                <span class="badge">{{ unread_count }}</span>
+                {% endif %}
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="sign-in">{{ get_text('dashboard') }}</a>
+            <a href="{{ url_for('logout') }}" class="sign-in" style="background-image: linear-gradient(to right, #f43f5e, #be123c);">{{ get_text('logout') }}</a>
+        {% else %}
+            <a href="{{ url_for('admin_login') }}" class="sign-in">{{ get_text('sign_in') }}</a>
+        {% endif %}
     </div>
 </nav>
